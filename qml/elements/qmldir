@@ -1,0 +1,5 @@
+module RQmlJoyChecker.Elements
+FeedbackSlider 1.0 FeedbackSlider.qml
+JoyAxis 1.0 JoyAxis.qml
+JoyButton 1.0 JoyButton.qml
+JoyFeedback 1.0 JoyFeedback.qml

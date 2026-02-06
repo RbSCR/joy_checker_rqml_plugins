@@ -1,0 +1,18 @@
+plugins:
+  - id: joy_checker_rqml_plugins.joy_viewer_plugin
+    name: "Joy Viewer"
+    group: "Topic monitor"
+    path: "share/@PROJECT_NAME@/qml/JoyViewerPlugin.qml"
+    single_instance: false
+
+  - id: joy_checker_rqml_plugins.joy_feedback_viewer_plugin
+    name: "JoyFeedback Viewer"
+    group: "Topic monitor"
+    path: "share/@PROJECT_NAME@/qml/JoyFeedbackViewerPlugin.qml"
+    single_instance: false
+
+  - id: joy_checker_rqml_plugins.joy_feedback_publisher_plugin
+    name: "JoyFeedback Publisher"
+    group: "Communication"
+    path: "share/@PROJECT_NAME@/qml/JoyFeedbackPublisherPlugin.qml"
+    single_instance: false

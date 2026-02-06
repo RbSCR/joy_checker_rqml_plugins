@@ -1,0 +1,48 @@
+# To use:
+#
+#     pre-commit run -a
+#
+# Or:
+#
+#     pre-commit install  # (runs every time you commit in git)
+#
+# To update this file:
+#
+#     pre-commit autoupdate
+#
+# See https://github.com/pre-commit/pre-commit
+
+repos:
+  # Standard hooks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: check-added-large-files
+        exclude: ^rqml_core/assets/
+      - id: check-docstring-first
+      - id: check-merge-conflict
+      - id: check-symlinks
+      - id: check-xml
+        exclude: ^third_party/
+      - id: check-yaml
+        args: ["--allow-multiple-documents"]
+      - id: end-of-file-fixer
+        exclude: ^third_party/
+      - id: mixed-line-ending
+        exclude: ^third_party/
+      - id: trailing-whitespace
+        exclude_types: [rst, markdown]
+        exclude: ^third_party/
+
+  # CMake Formatting
+  - repo: https://github.com/cheshirekow/cmake-format-precommit
+    rev: v0.6.13
+    hooks:
+    - id: cmake-lint
+
+  # Package XML
+  - repo: https://github.com/Joschi3/package_xml_validation.git
+    rev: v1.3.0
+    hooks:
+      - id: format-package-xml
+        name: Validate and Format package.xml
