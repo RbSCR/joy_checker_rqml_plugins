@@ -20,7 +20,7 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import Ros2
 
-import "elements"
+import "joy_checker_elements"
 
 Rectangle {
     id: root

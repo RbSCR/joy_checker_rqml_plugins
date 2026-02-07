@@ -23,7 +23,7 @@ import Ros2
 import RQml.Elements
 import RQml.Fonts
 
-import "elements"
+import "joy_checker_elements"
 
 Rectangle {
     id: root
