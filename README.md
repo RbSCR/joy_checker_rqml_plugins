@@ -99,8 +99,13 @@ RQml allows you to save and load your workspace configurations. Arrange your plu
 4. **Build the workspace**:
 
     ```bash
-    colcon build --symlink-install --packages-up-to joy_checker_rqml_plugins
+    colcon build --symlink-install --packages-up-to joy_checker_rqml_plugins rqml_default_plugins
     ```
+
+    >[!NOTE]
+    > Without `rqml_default_plugins` the default plugins will not be available in the application.
+    > For the plugins in this package these default plugins are not needed, but you won't have
+    > the opportunity to check them out 😃.
 
 5. **Source the workspace**:
 
