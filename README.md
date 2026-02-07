@@ -7,7 +7,7 @@ Additionally there is a plugin to publish messages of the `sensor_msgs/JoyFeedba
 
 See [RQml](https://github.com/StefanFabian/rqml) for a description of the (required) awesome RQml package by Stefan Fabian.
 
-THe 'Joy Viewer' plugin was inspired by Josh Newans [`joy_tester`](https://github.com/joshnewans/joy_tester) package.
+The 'Joy Viewer' plugin was inspired by Josh Newans [`joy_tester`](https://github.com/joshnewans/joy_tester) package.
 
 ## 🔌 Plugins
 
