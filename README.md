@@ -1,9 +1,9 @@
 # joy_checker_rqml_plugins
 
-This package contains some RQml plugins for checking/testing joysticks in ROS2.
+This package contains some RQml plugins for visually checking/testing joysticks in ROS2.
 
-The messages of the [`sensor_msgs/Joy`](https://docs.ros.org/en/ros2_packages/rolling/api/sensor_msgs/msg/Joy.html) and [`sensor_msgs/JoyFeedback`](https://docs.ros.org/en/ros2_packages/rolling/api/sensor_msgs/msg/JoyFeedback.html) topics are displayed in a user-friendly format.
-Additionally there is a plugin to publish messages of the `sensor_msgs/JoyFeedback` topic.
+The messages of the message types [`sensor_msgs/Joy`](https://docs.ros.org/en/ros2_packages/rolling/api/sensor_msgs/msg/Joy.html) and [`sensor_msgs/JoyFeedback`](https://docs.ros.org/en/ros2_packages/rolling/api/sensor_msgs/msg/JoyFeedback.html) are displayed in a user-friendly format.
+Additionally there is a plugin to publish messages of the `sensor_msgs/JoyFeedback` type.
 
 See [RQml](https://github.com/StefanFabian/rqml) for a description of the (required) awesome RQml package by Stefan Fabian.
 
@@ -13,9 +13,9 @@ The 'Joy Viewer' plugin was inspired by Josh Newans [`joy_tester`](https://githu
 
 This package provides the following RQml-plugins:
 
-* **Joy Viewer**: A viewer for `Joy` topic messages.
-* **JoyFeedback Viewer**: A viewer for `JoyFeedback` topic messages.
-* **JoyFeedback Publisher**: A publisher for `JoyFeedback` topic messages.
+* **Joy Viewer**: A viewer for `Joy` message type messages.
+* **JoyFeedback Viewer**: A viewer for `JoyFeedback` message type messages.
+* **JoyFeedback Publisher**: A publisher for `JoyFeedback` message type messages.
 
 ## 🚀 Usage
 
@@ -29,28 +29,35 @@ Within the application select the required plugin(s) from the `Plugins` menu.
 
 ### 🔎 Joy Viewer
 
-Displays the data (buttons and axes) from `Joy` topic messages.
+Displays the data (buttons and axes) from a `Joy` message type.
 
 Upon activating the plugin, no data will initially be displayed.
 The data will be displayed when the first message is received.
 
 Plugin is in the 'Topic monitor' group.
 
+Subscribed topic: `/joy`
+
 ### 🔎 JoyFeedback Viewer
 
-Displays the data (intensity, for each of the three types) from a `JoyFeedback` topic message.
+Displays the data (intensity, for each of the three types) from a `JoyFeedback` message type.
+The 'id' is not displayed.
 
 Plugin is in the 'Topic monitor' group.
 
+Subscribed topic: `/joy/set_feedback`
+
 ### ✉️ JoyFeedback Publisher
 
-Publishes a `JoyFeedback` topic message.
-The type and intensity can be selected/entered.
+Publishes a `JoyFeedback` message type.
+The type and intensity can be selected/entered. The 'id' is always 0.
 
 Plugin is in the 'Communication' group.
 
+Published topic: `/joy/set_feedback`
+
 >[!NOTE]
-> A 'JoyFeedback' topic message could also be published using the `MessagePublisher` (default plugin from RQml).
+> A 'JoyFeedback' message type could also be published using the `MessagePublisher` (default plugin from RQml).
 
 ### 📐 Managing Layouts
 

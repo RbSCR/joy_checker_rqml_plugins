@@ -36,7 +36,7 @@ Rectangle {
     Subscription {
         id: mySubscription
         messageType: "sensor_msgs/JoyFeedback"
-        topic: "joy/set_feedback"
+        topic: "/joy/set_feedback"
         enabled: true
         onNewMessage: msg => {
             d.handle_message(msg);
