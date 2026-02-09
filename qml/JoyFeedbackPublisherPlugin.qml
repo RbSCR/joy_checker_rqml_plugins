@@ -46,7 +46,7 @@ Rectangle {
                 font.bold: true
             }
             ComboBox {
-                id: typeselection
+                id: selectedType
                 model: ["Led", "Rumble", "Buzzer"]
                 currentIndex: 1
                 ToolTip.delay:   1000
@@ -56,11 +56,28 @@ Rectangle {
             }
 
             Label {
+                text: "Id:"
+                font.bold: true
+            }
+            SpinBox {
+                id: selectedId
+                from: 0
+                to: 99
+                stepSize: 1
+                editable: true
+
+                ToolTip.delay:   1000
+                ToolTip.timeout: 5000
+                ToolTip.visible: hovered
+                ToolTip.text: "Enter an id."
+            }
+
+            Label {
                 text: "Intensity:"
                 font.bold: true
             }
             FeedbackSlider {
-                id: testFeedbackSlider
+                id: selectedIntensity
                 Layout.fillWidth: true
                 direction: Qt.Horizontal
             }
@@ -70,9 +87,9 @@ Rectangle {
                 Layout.alignment: Qt.AlignHCenter
                 onClicked: {
                     let msg = Ros2.createEmptyMessage("sensor_msgs/msg/JoyFeedback");
-                    msg.type = typeselection.currentIndex;
-                    msg.id = 0;
-                    msg.intensity = testFeedbackSlider.value.toFixed(5);
+                    msg.type = selectedType.currentIndex;
+                    msg.id = selectedId.value;
+                    msg.intensity = selectedIntensity.value.toFixed(5);
 
                     d.publisher.publish(msg);
                 }

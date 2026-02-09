@@ -25,7 +25,7 @@ import "joy_checker_elements"
 Rectangle {
     id: root
     // Set the minimum size for this plugin's dock widget
-    property var kddockwidgets_min_size: Qt.size(400, 400)
+    property var kddockwidgets_min_size: Qt.size(280, 450)
     color: palette.base
 
     Component.onCompleted: {
@@ -50,26 +50,16 @@ Rectangle {
     ColumnLayout {
         anchors.top: parent.top
         anchors.horizontalCenter: parent.horizontalCenter
-        spacing: 8
+        anchors.margins: 10
 
         GridView {
             id: joyfeedbackView
 
-            cellWidth: 380
-            cellHeight: 32
-            implicitWidth: 400
+            cellWidth: 220
+            cellHeight: 90
+            implicitWidth: 250
             implicitHeight: 400
             Layout.alignment: Qt.AlignTop
-
-            header: Rectangle {
-                width: joyfeedbackView.cellWidth
-                height: joyfeedbackView.cellHeight
-                Text {
-                    text: "Types"
-                    anchors.centerIn: parent
-                    font.bold: true
-                }
-            }
             model: joyfeedbackModel
             delegate: JoyFeedback { }
         }
@@ -81,18 +71,37 @@ Rectangle {
         function handle_message(msg) {
 
             let trigger = Math.random() + 0.0000000001
-            joyfeedbackModel.set(msg.type, {feedbackValue: msg.intensity, updatetrigger: trigger });
+            joyfeedbackModel.set(msg.type, {
+                idValue: msg.id,
+                feedbackValue: msg.intensity,
+                updatetrigger: trigger
+                });
         }
 
         function create_feedback_list_elements() {
 
-            const entry0 = {name: "Led", feedbackValue: 0.0, updatetrigger: 0.0 };
+            const entry0 = {
+                nameValue: "Led",
+                idValue: 0,
+                feedbackValue: 0.0,
+                updatetrigger: 0.0
+            };
             joyfeedbackModel.append(entry0);
 
-            const entry1 = {name: "Rumble", feedbackValue: 0.0, updatetrigger: 0.0 };
+            const entry1 = {
+                nameValue: "Rumble",
+                idValue: 0,
+                feedbackValue: 0.0,
+                updatetrigger: 0.0
+            };
             joyfeedbackModel.append(entry1);
 
-            const entry2 = {name: "Buzzer", feedbackValue: 0.0, updatetrigger: 0.0 };
+            const entry2 = {
+                nameValue: "Buzzer",
+                idValue: 0,
+                feedbackValue: 0.0,
+                updatetrigger: 0.0
+            };
             joyfeedbackModel.append(entry2);
         }
     }

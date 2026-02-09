@@ -21,7 +21,8 @@ import Ros2
 Rectangle {
     id: root
 
-    required property string name
+    required property string nameValue
+    required property int idValue
     required property double feedbackValue
     required property double updatetrigger
 
@@ -32,21 +33,31 @@ Rectangle {
         _color_index = _color_index === (_color_sequence.length - 1) ? 1 : _color_index + 1;
     }
 
-    width: 370
-    height: 26
+    width: 200
+    height: 82
     radius: 8
     color: "#f2f2f2"
     border.color: "#b3b3b3"
     border.width: 1
+    anchors.margins: 10
 
     Text {
         id: name_label
 
-        text: root.name
+        text: root.nameValue
         color: "black"
         width: 50
         anchors.margins: 4
-        anchors.verticalCenter: parent.verticalCenter
+        anchors.top: parent.top
+        anchors.left: parent.left
+    }
+    Text {
+        id: id_label
+        text: root.updatetrigger === 0.0 ? "Id: " : "Id: " + root.idValue
+        color: "black"
+        anchors.margins: 4
+        anchors.leftMargin: 30
+        anchors.top: name_label.bottom
         anchors.left: parent.left
     }
     Rectangle {
@@ -59,9 +70,9 @@ Rectangle {
         border.color: "lightgray"
         border.width: 1
         anchors.margins: 4
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.left: name_label.right
-
+        anchors.leftMargin: 30
+        anchors.top: id_label.bottom
+        anchors.left: parent.left
         Rectangle {
             id: inner_bar
 
@@ -76,11 +87,22 @@ Rectangle {
     Text {
         id: value_label
 
-        text: root.updatetrigger === 0.0 ? "no message yet" : root.feedbackValue.toFixed(5) + "  at " + Ros2.now().seconds()
+        text: root.updatetrigger === 0.0 ? " " : root.feedbackValue.toFixed(5)
         color: "black"
         width: 50
         anchors.margins: 4
-        anchors.verticalCenter: parent.verticalCenter
         anchors.left: outer_bar.right
+        anchors.top: outer_bar.top
+    }
+        Text {
+        id: time_label
+
+        text: root.updatetrigger === 0.0 ? "no message yet" : "at: " + Ros2.now().seconds()
+        color: "black"
+        width: 50
+        anchors.margins: 4
+        anchors.leftMargin: 30
+        anchors.left: parent.left
+        anchors.top: outer_bar.bottom
     }
 }

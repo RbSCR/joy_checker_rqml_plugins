@@ -40,8 +40,8 @@ Subscribed topic: `/joy`
 
 ### 🔎 JoyFeedback Viewer
 
-Displays the data (intensity, for each of the three types) from a `JoyFeedback` message type.
-The 'id' is not displayed.
+Displays the data (id and intensity, for each of the three types) from a `JoyFeedback` message type.
+Also the ROStime the message was received is displayed.
 
 Plugin is in the 'Topic monitor' group.
 
@@ -50,7 +50,7 @@ Subscribed topic: `/joy/set_feedback`
 ### ✉️ JoyFeedback Publisher
 
 Publishes a `JoyFeedback` message type.
-The type and intensity can be selected/entered. The 'id' is always 0.
+The type, id and intensity can be selected/entered.
 
 Plugin is in the 'Communication' group.
 
