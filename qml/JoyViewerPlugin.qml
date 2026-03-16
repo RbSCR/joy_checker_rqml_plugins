@@ -32,6 +32,12 @@ Rectangle {
         if (context.first_message_seen === undefined) {
             context.first_message_seen = false;
         }
+        if (context.max_axes_length === undefined) {
+            context.max_axes_length = 0;
+        }
+        if (context.max_buttons_length === undefined) {
+            context.max_buttons_length = 0;
+        }
     }
 
     Subscription {
@@ -115,7 +121,23 @@ Rectangle {
         function handle_message(msg) {
 
             if (!context.first_message_seen) {
-                handle_first_message(msg);
+                context.first_message_seen = true;
+            }
+
+            if (context.max_buttons_length < msg.buttons.toArray().length) {
+                increase_joybuttonModel(msg);
+            } else if (context.max_buttons_length > msg.buttons.toArray().length) {
+                joybuttonModel.clear();
+                context.max_buttons_length = 0;
+                increase_joybuttonModel(msg);
+            }
+
+            if (context.max_axes_length < msg.axes.toArray().length) {
+                increase_joyaxesModel(msg);
+            } else if (context.max_axes_length > msg.axes.toArray().length) {
+                joyaxesModel.clear();
+                context.max_axes_length = 0;
+                increase_joyaxesModel(msg);
             }
 
             let bt_array = msg.buttons.toArray();
@@ -131,23 +153,29 @@ Rectangle {
             }
         }
 
-        function handle_first_message(msg) {
+        function increase_joybuttonModel(msg) {
 
-            for (let i = 0; i < msg.buttons.toArray().length; i++) {
+            for (let i = context.max_buttons_length; i < msg.buttons.toArray().length; i++) {
                 const entry = {
                     index: i,
                     value: 0
                 };
                 joybuttonModel.append(entry);
             }
-            for (let i = 0; i < msg.axes.toArray().length; i++) {
+            context.max_buttons_length =  msg.buttons.toArray().length;
+        }
+
+       function increase_joyaxesModel(msg) {
+
+            for (let i = context.max_axes_length; i < msg.axes.toArray().length; i++) {
                 const entry = {
                     index: i,
-                    value: 0.0
+                    value: 0
                 };
                 joyaxesModel.append(entry);
             }
-            context.first_message_seen = true;
-        }
+            context.max_axes_length =  msg.axes.toArray().length;
+       }
+
     } // end QtObject d
 }
