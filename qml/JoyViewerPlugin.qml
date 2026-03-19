@@ -19,6 +19,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import Ros2
+import RQml.Elements
 
 import "joy_checker_elements"
 
@@ -43,8 +44,8 @@ Rectangle {
     Subscription {
         id: mySubscription
         messageType: "sensor_msgs/msg/Joy"
-        topic: "/joy"
-        enabled: true
+        topic: context.topic ?? ""
+        enabled: Ros2.isValidTopic(topic)
         onNewMessage: msg => {
             d.handle_message(msg);
         }
@@ -58,11 +59,77 @@ Rectangle {
         id: joyaxesModel
     }
 
-    GridView {
-        id: joybuttonView
+    ColumnLayout {
+        id: selectionColumn
 
         anchors.top: parent.top
         anchors.left: parent.left
+        anchors.leftMargin: 10
+        spacing: 8
+
+        RowLayout {
+            id: selectionBar
+
+            Layout.fillWidth: true
+            layoutDirection: Qt.LeftToRight
+            spacing: 8
+
+            FuzzySelector {
+                id: topicSelect
+                Layout.fillWidth: true
+                Layout.preferredWidth: 400
+                placeholderText: qsTr("Select or enter a topic")
+                text: context.topic ?? ""
+                onTextChanged: {
+                    if (text === context.topic) {
+                        return;
+                    }
+                    if (!Ros2.isValidTopic(text)) {
+                        return;
+                    }
+                    context.topic = text;
+                }
+
+                function refresh() {
+                    let result = Ros2.queryTopics("sensor_msgs/msg/Joy");
+                    if (!!context.topic) {
+                        const index = result.indexOf(context.topic);
+                        if (index != -1) {
+                            result.splice(index, 1);
+                        }
+                        result.unshift(context.topic);
+                    }
+                    model = result;
+                }
+                Component.onCompleted: refresh()
+            }
+
+            Label {
+                text: topicSelect.model.length > 0 ? qsTr("%1 topic(s) found").arg(topicSelect.model.length) : qsTr("No topics found")
+                font.italic: true
+                opacity: 0.7
+                Layout.fillWidth: true
+                horizontalAlignment: Text.AlignRight
+            }
+
+            RefreshButton {
+                onClicked: {
+                    animate = true;
+                    topicSelect.refresh();
+                    animate = false;
+                }
+                ToolTip.delay: 1000
+                ToolTip.timeout: 5000
+                ToolTip.visible: hovered
+                ToolTip.text: qsTr("Refresh the topic list")
+            }
+        }
+    }
+
+    GridView {
+        id: joybuttonView
+
+        anchors.top: selectionColumn.bottom
         anchors.leftMargin: 10
         cellWidth: 80
         cellHeight: 32
@@ -87,7 +154,7 @@ Rectangle {
     GridView {
         id: joyaxesView
 
-        anchors.top: parent.top
+        anchors.top: selectionColumn.bottom
         anchors.left: joybuttonView.right
         cellWidth: 210
         cellHeight: 32
@@ -109,7 +176,7 @@ Rectangle {
     }
 
     Text {
-        text: "Data will be displayed when the first message is received."
+        text: qsTr("Data will be displayed when the first message is received.")
         visible: !context.first_message_seen
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
