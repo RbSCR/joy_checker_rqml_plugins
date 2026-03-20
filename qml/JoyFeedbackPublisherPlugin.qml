@@ -31,9 +31,76 @@ Rectangle {
     property var kddockwidgets_min_size: Qt.size(300, 300)
     color: palette.base
 
+    ColumnLayout {
+        id: selectionColumn
+
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.leftMargin: 10
+        spacing: 8
+
+        RowLayout {
+            id: selectionBar
+
+            Layout.fillWidth: true
+            layoutDirection: Qt.LeftToRight
+            spacing: 8
+
+            FuzzySelector {
+                id: topicSelect
+                Layout.fillWidth: true
+                Layout.preferredWidth: 300
+                placeholderText: qsTr("Select or enter a topic")
+                text: context.topic ?? ""
+                onTextChanged: {
+                    if (text === context.topic) {
+                        return;
+                    }
+                    if (!Ros2.isValidTopic(text)) {
+                        return;
+                    }
+                    context.topic = text;
+                }
+
+                function refresh() {
+                    let result = Ros2.queryTopics("sensor_msgs/msg/JoyFeedback");
+                    if (!!context.topic) {
+                        const index = result.indexOf(context.topic);
+                        if (index != -1) {
+                            result.splice(index, 1);
+                        }
+                        result.unshift(context.topic);
+                    }
+                    model = result;
+                }
+                Component.onCompleted: refresh()
+            }
+
+            Label {
+                text: topicSelect.model.length > 0 ? qsTr("%1 topic(s) found").arg(topicSelect.model.length) : qsTr("No topics found")
+                font.italic: true
+                opacity: 0.7
+                Layout.fillWidth: true
+                horizontalAlignment: Text.AlignRight
+            }
+
+            RefreshButton {
+                onClicked: {
+                    animate = true;
+                    topicSelect.refresh();
+                    animate = false;
+                }
+                ToolTip.delay: 1000
+                ToolTip.timeout: 5000
+                ToolTip.visible: hovered
+                ToolTip.text: qsTr("Refresh the topic list")
+            }
+        }
+    }
+
 
     ColumnLayout {
-        anchors.top: parent.top
+        anchors.top: selectionColumn.bottom
         anchors.horizontalCenter: parent.horizontalCenter
         spacing: 8
 
@@ -100,6 +167,7 @@ Rectangle {
     // Use a private object for internal logic and properties
     QtObject {
         id: d
-        property var publisher: Ros2.createPublisher("/joy/set_feedback", "sensor_msgs/msg/JoyFeedback")
+
+        property var publisher: Ros2.createPublisher(context.topic, "sensor_msgs/msg/JoyFeedback")
     }
 }
