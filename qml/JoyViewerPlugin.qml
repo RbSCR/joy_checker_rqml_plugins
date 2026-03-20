@@ -39,6 +39,12 @@ Rectangle {
         if (context.max_buttons_length === undefined) {
             context.max_buttons_length = 0;
         }
+        if (context.topic === undefined) {
+            topicSelect.refresh();
+            if (topicSelect.model.length == 1) {
+                context.topic = topicSelect.model[0];
+            }
+        }
     }
 
     Subscription {

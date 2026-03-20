@@ -26,12 +26,19 @@ import "joy_checker_elements"
 Rectangle {
     id: root
     // Set the minimum size for this plugin's dock widget
-    property var kddockwidgets_min_size: Qt.size(280, 450)
+    property var kddockwidgets_min_size: Qt.size(280, 300)
     color: palette.base
 
     Component.onCompleted: {
 
         d.create_feedback_list_elements();
+
+        if (context.topic === undefined) {
+            topicSelect.refresh();
+            if (topicSelect.model.length == 1) {
+                context.topic = topicSelect.model[0];
+            }
+        }
     }
 
     Subscription {
@@ -66,7 +73,7 @@ Rectangle {
             FuzzySelector {
                 id: topicSelect
                 Layout.fillWidth: true
-                Layout.preferredWidth: 400
+                Layout.preferredWidth: 280
                 placeholderText: qsTr("Select or enter a topic")
                 text: context.topic ?? ""
                 onTextChanged: {

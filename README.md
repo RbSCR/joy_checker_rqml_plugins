@@ -36,7 +36,9 @@ The data will be displayed when the first message is received.
 
 Plugin is in the 'Topic monitor' group.
 
-Subscribed topic: `/joy`
+The relevant topic can either can be entered or can be selected in a dropdown from the (already)
+available topics of message type `Joy`. If there is only 1 availabe topic when the plugin
+is activated, that topic will be selected by default and the data will be displayed.
 
 ### 🔎 JoyFeedback Viewer
 
@@ -45,7 +47,9 @@ Also the ROStime the message was received is displayed.
 
 Plugin is in the 'Topic monitor' group.
 
-Subscribed topic: `/joy/set_feedback`
+The relevant topic can either can be entered or can be selected in a dropdown from the (already)
+available topics of message type `JoyFeedback`. If there is only 1 available topic when the plugin
+is activated, that topic will be selected by default and the data will be displayed.
 
 ### ✉️ JoyFeedback Publisher
 
@@ -54,7 +58,10 @@ The type, id and intensity can be selected/entered.
 
 Plugin is in the 'Communication' group.
 
-Published topic: `/joy/set_feedback`
+The relevant topic can either can be entered or can be selected in a dropdown from the (already)
+available topics of message type `JoyFeedback`. If there is only 1 availabe topic when the plugin
+is activated, that topic will be selected by default.
+
 
 >[!NOTE]
 > A 'JoyFeedback' message type could also be published using the `MessagePublisher` (default plugin from RQml).

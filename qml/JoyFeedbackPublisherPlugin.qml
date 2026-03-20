@@ -31,6 +31,16 @@ Rectangle {
     property var kddockwidgets_min_size: Qt.size(300, 300)
     color: palette.base
 
+    Component.onCompleted: {
+
+        if (context.topic === undefined) {
+            topicSelect.refresh();
+            if (topicSelect.model.length == 1) {
+                context.topic = topicSelect.model[0];
+            }
+        }
+    }
+
     ColumnLayout {
         id: selectionColumn
 
