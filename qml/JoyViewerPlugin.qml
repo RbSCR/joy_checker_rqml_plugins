@@ -111,7 +111,9 @@ Rectangle {
             }
 
             Label {
-                text: topicSelect.model.length > 0 ? qsTr("%1 topic(s) found").arg(topicSelect.model.length) : qsTr("No topics found")
+                text: topicSelect.model.length == 0 ? qsTr("No topics found")
+                    : topicSelect.model.length == 1 ? qsTr("1 topic found")
+                    : qsTr("%1 topics found").arg(topicSelect.model.length)
                 font.italic: true
                 opacity: 0.7
                 Layout.fillWidth: true
