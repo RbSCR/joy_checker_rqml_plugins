@@ -133,5 +133,6 @@ RQml allows you to save and load your workspace configurations. Arrange your plu
 Tested with:
 
 ![ROS2 Rolling](https://img.shields.io/badge/ROS2-Rolling-blue)
+![ROS2 Kilted](https://img.shields.io/badge/ROS2-Kilted-blue)
 
 ---
