@@ -111,6 +111,8 @@ Rectangle {
             }
 
             RefreshButton {
+                Layout.preferredHeight: topicSelect.height
+                Layout.preferredWidth: topicSelect.height
                 onClicked: {
                     animate = true;
                     topicSelect.refresh();
