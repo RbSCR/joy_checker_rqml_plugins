@@ -42,8 +42,6 @@ Rectangle {
     }
 
     ColumnLayout {
-        id: selectionColumn
-
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.leftMargin: 10
@@ -92,8 +90,8 @@ Rectangle {
                     : qsTr("%1 topics found").arg(topicSelect.model.length)
                 font.italic: true
                 opacity: 0.7
-                Layout.fillWidth: true
                 horizontalAlignment: Text.AlignRight
+                Layout.fillWidth: true
             }
 
             RefreshButton {
@@ -110,72 +108,70 @@ Rectangle {
                 ToolTip.text: qsTr("Refresh the topic list")
             }
         }
-    }
 
+        RowLayout {
+            spacing: 8
 
-    ColumnLayout {
-        anchors.top: selectionColumn.bottom
-        anchors.horizontalCenter: parent.horizontalCenter
-        spacing: 8
-
-        GridLayout {
-            Layout.fillWidth: true
-            columns: 2
-
-            Label {
-                text: "Type:"
-                font.bold: true
-            }
-            ComboBox {
-                id: selectedType
-                model: ["Led", "Rumble", "Buzzer"]
-                currentIndex: 1
-                ToolTip.delay:   1000
-                ToolTip.timeout: 5000
-                ToolTip.visible: hovered
-                ToolTip.text: "Select a type."
-            }
-
-            Label {
-                text: "Id:"
-                font.bold: true
-            }
-            SpinBox {
-                id: selectedId
-                from: 0
-                to: 99
-                stepSize: 1
-                editable: true
-
-                ToolTip.delay:   1000
-                ToolTip.timeout: 5000
-                ToolTip.visible: hovered
-                ToolTip.text: "Enter an id."
-            }
-
-            Label {
-                text: "Intensity:"
-                font.bold: true
-            }
-            FeedbackSlider {
-                id: selectedIntensity
+            GridLayout {
                 Layout.fillWidth: true
-                direction: Qt.Horizontal
-            }
+                columns: 2
 
-            Button {
-                text: "Send message"
-                Layout.alignment: Qt.AlignHCenter
-                onClicked: {
-                    let msg = Ros2.createEmptyMessage("sensor_msgs/msg/JoyFeedback");
-                    msg.type = selectedType.currentIndex;
-                    msg.id = selectedId.value;
-                    msg.intensity = selectedIntensity.value.toFixed(5);
+                Label {
+                    text: "Type:"
+                    font.bold: true
+                }
+                ComboBox {
+                    id: selectedType
+                    model: ["Led", "Rumble", "Buzzer"]
+                    currentIndex: 1
+                    ToolTip.delay:   1000
+                    ToolTip.timeout: 5000
+                    ToolTip.visible: hovered
+                    ToolTip.text: "Select a type."
+                }
 
-                    d.publisher.publish(msg);
+                Label {
+                    text: "Id:"
+                    font.bold: true
+                }
+                SpinBox {
+                    id: selectedId
+                    from: 0
+                    to: 99
+                    stepSize: 1
+                    editable: true
+
+                    ToolTip.delay:   1000
+                    ToolTip.timeout: 5000
+                    ToolTip.visible: hovered
+                    ToolTip.text: "Enter an id."
+                }
+
+                Label {
+                    text: "Intensity:"
+                    font.bold: true
+                }
+                FeedbackSlider {
+                    id: selectedIntensity
+                    Layout.fillWidth: true
+                    direction: Qt.Horizontal
+                }
+
+                Button {
+                    text: "Send message"
+                    Layout.alignment: Qt.AlignHCenter
+                    onClicked: {
+                        let msg = Ros2.createEmptyMessage("sensor_msgs/msg/JoyFeedback");
+                        msg.type = selectedType.currentIndex;
+                        msg.id = selectedId.value;
+                        msg.intensity = selectedIntensity.value.toFixed(5);
+
+                        d.publisher.publish(msg);
+                    }
                 }
             }
         }
+
     }
 
     // Use a private object for internal logic and properties
