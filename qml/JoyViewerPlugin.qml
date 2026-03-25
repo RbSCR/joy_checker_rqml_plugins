@@ -111,8 +111,8 @@ Rectangle {
                     : qsTr("%1 topics found").arg(topicSelect.model.length)
                 font.italic: true
                 opacity: 0.7
-                Layout.fillWidth: true
                 horizontalAlignment: Text.AlignRight
+                Layout.fillWidth: true
             }
 
             RefreshButton {
