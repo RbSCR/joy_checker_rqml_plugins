@@ -26,13 +26,10 @@ import "joy_checker_elements"
 Rectangle {
     id: root
     // Set the minimum size for this plugin's dock widget
-    property var kddockwidgets_min_size: Qt.size(400, 400)
+    property var kddockwidgets_min_size: Qt.size(530, 400)
     color: palette.base
 
     Component.onCompleted: {
-        if (context.first_message_seen === undefined) {
-            context.first_message_seen = false;
-        }
         if (context.max_axes_length === undefined) {
             context.max_axes_length = 0;
         }
@@ -66,24 +63,22 @@ Rectangle {
     }
 
     ColumnLayout {
-        id: selectionColumn
-
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.leftMargin: 10
         spacing: 8
+        implicitWidth: 530
 
         RowLayout {
-            id: selectionBar
-
             Layout.fillWidth: true
             layoutDirection: Qt.LeftToRight
             spacing: 8
 
             FuzzySelector {
                 id: topicSelect
+
                 Layout.fillWidth: true
-                Layout.preferredWidth: 400
+                Layout.preferredWidth: 350
                 placeholderText: qsTr("Select or enter a topic")
                 text: context.topic ?? ""
                 onTextChanged: {
@@ -116,8 +111,8 @@ Rectangle {
                     : qsTr("%1 topics found").arg(topicSelect.model.length)
                 font.italic: true
                 opacity: 0.7
-                Layout.fillWidth: true
                 horizontalAlignment: Text.AlignRight
+                Layout.fillWidth: true
             }
 
             RefreshButton {
@@ -134,72 +129,62 @@ Rectangle {
                 ToolTip.text: qsTr("Refresh the topic list")
             }
         }
-    }
 
-    GridView {
-        id: joybuttonView
+        RowLayout {
+            layoutDirection: Qt.LeftToRight
+            spacing: 8
 
-        anchors.top: selectionColumn.bottom
-        anchors.leftMargin: 10
-        cellWidth: 80
-        cellHeight: 32
-        implicitWidth: 250
-        implicitHeight: 400
-        Layout.alignment: Qt.AlignTop | Qt.AlignLeft
-        flow: GridView.FlowLeftToRight
-        header: Rectangle {
-                    width: joybuttonView.width
-                    height: joybuttonView.cellHeight
-                    Text {
-                        text: "Buttons"
-                        anchors.centerIn: parent
-                        font.bold: true
-                    }
+            GridView {
+                id: joybuttonView
 
-                }
-        model: joybuttonModel
-        delegate: JoyButton { }
-    }
+                cellWidth: 74
+                cellHeight: 30
+                Layout.preferredWidth: 225
+                Layout.preferredHeight: 400
+                Layout.alignment: Qt.AlignTop | Qt.AlignLeft
+                flow: GridView.FlowLeftToRight
+                header: Rectangle {
+                            width: joybuttonView.width
+                            height: joybuttonView.cellHeight
+                            Text {
+                                text: "Buttons"
+                                anchors.centerIn: parent
+                                font.bold: true
+                            }
 
-    GridView {
-        id: joyaxesView
+                        }
+                model: joybuttonModel
+                delegate: JoyButton { }
+            }
 
-        anchors.top: selectionColumn.bottom
-        anchors.left: joybuttonView.right
-        cellWidth: 210
-        cellHeight: 32
-        implicitWidth: 230
-        implicitHeight: 500
-        Layout.alignment: Qt.AlignTop | Qt.AlignLeft
-        flow: GridView.FlowLeftToRight
-        header: Rectangle {
-                    width: joybuttonView.width
-                    height: joybuttonView.cellHeight
-                    Text {
-                        text: "Axes"
-                        anchors.centerIn: parent
-                        font.bold: true
-                    }
-                }
-        model: joyaxesModel
-        delegate: JoyAxis { }
-    }
+            GridView {
+                id: joyaxesView
 
-    Text {
-        text: qsTr("Data will be displayed when the first message is received.")
-        visible: !context.first_message_seen
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.verticalCenter: parent.verticalCenter
+                cellWidth: 210
+                cellHeight: 30
+                Layout.preferredWidth: 300
+                Layout.preferredHeight: 400
+                Layout.alignment: Qt.AlignTop | Qt.AlignLeft
+                flow: GridView.FlowLeftToRight
+                header: Rectangle {
+                            width: joyaxesView.width
+                            height: joyaxesView.cellHeight
+                            Text {
+                                text: "Axes"
+                                anchors.centerIn: parent
+                                font.bold: true
+                            }
+                        }
+                model: joyaxesModel
+                delegate: JoyAxis { }
+            }
+        }
     }
 
     QtObject {
         id: d
 
         function handle_message(msg) {
-
-            if (!context.first_message_seen) {
-                context.first_message_seen = true;
-            }
 
             if (context.max_buttons_length < msg.buttons.toArray().length) {
                 increase_joybuttonModel(msg);
