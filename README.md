@@ -40,6 +40,8 @@ The relevant topic can either can be entered or can be selected in a fuzzy-selec
 (already) available topics of message type `Joy`. If there is only 1 availabe topic when the plugin
 is activated, that topic will be selected by default and the data will be displayed.
 
+![image](docs/images/JoyViewer.png)
+
 ### 🔎 JoyFeedback Viewer
 
 Displays the data (id and intensity, for each of the three types) from a `JoyFeedback` message type.
@@ -51,6 +53,8 @@ The relevant topic can either can be entered or can be selected in a fuzzy-selec
 (already) available topics of message type `JoyFeedback`. If there is only 1 available topic when
 the plugin is activated, that topic will be selected by default and the data will be displayed.
 
+![image](docs/images/JoyFeedbackViewer.png)
+
 ### ✉️ JoyFeedback Publisher
 
 Publishes a `JoyFeedback` message type.
@@ -61,6 +65,8 @@ Plugin is in the 'Communication' group.
 The relevant topic can either can be entered or can be selected in a fuzzy-select-dropdown from the
 (already) available topics of message type `JoyFeedback`. If there is only 1 availabe topic when
 the plugin is activated, that topic will be selected by default.
+
+![image](docs/images/JoyFeedbackPublisher.png)
 
 >[!NOTE]
 > A 'JoyFeedback' message type could also be published using the `MessagePublisher` (default plugin from RQml).
