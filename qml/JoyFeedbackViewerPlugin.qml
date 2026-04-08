@@ -26,7 +26,7 @@ import "joy_checker_elements"
 Rectangle {
     id: root
     // Set the minimum size for this plugin's dock widget
-    property var kddockwidgets_min_size: Qt.size(280, 300)
+    property var kddockwidgets_min_size: Qt.size(220, 300)
     color: palette.base
 
     Component.onCompleted: {
@@ -56,24 +56,21 @@ Rectangle {
     }
 
     ColumnLayout {
-        id: selectionColumn
-
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.leftMargin: 10
         spacing: 8
 
         RowLayout {
-            id: selectionBar
-
             Layout.fillWidth: true
             layoutDirection: Qt.LeftToRight
             spacing: 8
 
             FuzzySelector {
                 id: topicSelect
+
                 Layout.fillWidth: true
-                Layout.preferredWidth: 280
+                Layout.preferredWidth: 210
                 placeholderText: qsTr("Select or enter a topic")
                 text: context.topic ?? ""
                 onTextChanged: {
@@ -106,8 +103,8 @@ Rectangle {
                     : qsTr("%1 topics found").arg(topicSelect.model.length)
                 font.italic: true
                 opacity: 0.7
-                Layout.fillWidth: true
                 horizontalAlignment: Text.AlignRight
+                Layout.fillWidth: true
             }
 
             RefreshButton {
@@ -124,23 +121,23 @@ Rectangle {
                 ToolTip.text: qsTr("Refresh the topic list")
             }
         }
-    }
 
-    ColumnLayout {
-        anchors.top: selectionColumn.bottom
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.margins: 10
+        RowLayout {
+            Layout.alignment: Qt.AlignCenter
 
-        GridView {
-            id: joyfeedbackView
+            ColumnLayout {
+                spacing: 8
 
-            cellWidth: 220
-            cellHeight: 90
-            implicitWidth: 250
-            implicitHeight: 400
-            Layout.alignment: Qt.AlignTop
-            model: joyfeedbackModel
-            delegate: JoyFeedback { }
+                GridView {
+                    cellWidth: 204
+                    cellHeight: 86
+                    Layout.preferredWidth: 210
+                    Layout.preferredHeight: 300
+                    Layout.alignment: Qt.AlignTop | Qt.AlignHCenter
+                    model: joyfeedbackModel
+                    delegate: JoyFeedback { }
+                }
+            }
         }
     }
 
