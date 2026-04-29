@@ -34,7 +34,7 @@ Displays the data (buttons and axes) from a `Joy` message type.
 Upon activating the plugin, no data will initially be displayed.
 The data will be displayed when the first message is received.
 
-Plugin is in the 'Topic monitor' group.
+Plugin is in the 'Topic viewer' group.
 
 The relevant topic can either can be entered or can be selected in a fuzzy-select-dropdown from the
 (already) available topics of message type `Joy`. If there is only 1 availabe topic when the plugin
@@ -47,7 +47,7 @@ is activated, that topic will be selected by default and the data will be displa
 Displays the data (id and intensity, for each of the three types) from a `JoyFeedback` message type.
 Also the ROStime the message was received is displayed.
 
-Plugin is in the 'Topic monitor' group.
+Plugin is in the 'Topic viewer' group.
 
 The relevant topic can either can be entered or can be selected in a fuzzy-select-dropdown from the
 (already) available topics of message type `JoyFeedback`. If there is only 1 available topic when
@@ -93,20 +93,21 @@ RQml allows you to save and load your workspace configurations. Arrange your plu
 
     ```bash
     git clone https://github.com/RbSCR/joy_checker_rqml_plugins.git
+
     git clone https://github.com/StefanFabian/qml6_ros2_plugin.git -b $ROS_DISTRO
     git clone https://github.com/StefanFabian/rqml.git
     ```
 
-    *(Replace `<distro>` with your ROS 2 distribution, e.g., `jazzy`, `kilted`)*
+    *(Replace `<distro>` with your ROS 2 distribution, e.g., `jazzy`, `kilted`, `rolling`)*
 
     This clones both this repository and the two main dependencies [RQml](https://github.com/StefanFabian/rqml) and [QML6 ROS2 Plugin](https://github.com/StefanFabian/qml6_ros2_plugin).
 
-    This package is not available on a distro.
-
-    RQml is currently not yet available on all distros. If it is available on yours, you may omit cloning it.
+    If the dependencies are available on the distro your using, you may omit cloning these and install them using rosdep.
 
     >[!NOTE]
     > RQml uses qt6 which currently is only available in `rolling`.
+
+    This package is not available on a distro.
 
 3. **Install dependencies** (using rosdep):
 
@@ -118,10 +119,16 @@ RQml allows you to save and load your workspace configurations. Arrange your plu
 4. **Build the workspace**:
 
     ```bash
-    colcon build --symlink-install --packages-up-to joy_checker_rqml_plugins rqml_default_plugins
+    colcon build --symlink-install joy_checker_rqml_plugins
     ```
 
     >[!NOTE]
+    > If you cloned the dependencies you could build with:
+    >
+    >```bash
+    >colcon build --symlink-install --packages-up-to joy_checker_rqml_plugins rqml_default_plugins
+    >```
+    >
     > Without `rqml_default_plugins` the default plugins will not be available in the application.
     > For the plugins in this package these default plugins are not needed, but you won't have
     > the opportunity to check them out 😃.
