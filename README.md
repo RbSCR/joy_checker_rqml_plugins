@@ -93,19 +93,15 @@ RQml allows you to save and load your workspace configurations. Arrange your plu
 
     ```bash
     git clone https://github.com/RbSCR/joy_checker_rqml_plugins.git
-
-    git clone https://github.com/StefanFabian/qml6_ros2_plugin.git -b $ROS_DISTRO
-    git clone https://github.com/StefanFabian/rqml.git
     ```
 
-    *(Replace `<distro>` with your ROS 2 distribution, e.g., `jazzy`, `kilted`, `rolling`)*
-
-    This clones both this repository and the two main dependencies [RQml](https://github.com/StefanFabian/rqml) and [QML6 ROS2 Plugin](https://github.com/StefanFabian/qml6_ros2_plugin).
-
-    If the dependencies are available on the distro your using, you may omit cloning these and install them using rosdep.
+    *(Replace `<distro>` with your ROS 2 distribution, e.g., `jazzy`, `kilted`,  `lyrical`)*
 
     >[!NOTE]
-    > RQml uses qt6 which currently is only available in `rolling`.
+    > This package uses RQml, which uses qt6.
+    > Both RQml and qt6 should now be available in `jazzy` `kilted` and `lyrical`.
+    >
+    > In `rolling` it might not yet be available.
 
     This package is not available on a distro.
 
@@ -113,6 +109,7 @@ RQml allows you to save and load your workspace configurations. Arrange your plu
 
     ```bash
     cd ~/ros2_ws
+    rosdep update
     rosdep install --from-paths src --ignore-src -r -y
     ```
 
@@ -121,17 +118,6 @@ RQml allows you to save and load your workspace configurations. Arrange your plu
     ```bash
     colcon build --symlink-install joy_checker_rqml_plugins
     ```
-
-    >[!NOTE]
-    > If you cloned the dependencies you could build with:
-    >
-    >```bash
-    >colcon build --symlink-install --packages-up-to joy_checker_rqml_plugins rqml_default_plugins
-    >```
-    >
-    > Without `rqml_default_plugins` the default plugins will not be available in the application.
-    > For the plugins in this package these default plugins are not needed, but you won't have
-    > the opportunity to check them out 😃.
 
 5. **Source the workspace**:
 
@@ -145,7 +131,8 @@ RQml allows you to save and load your workspace configurations. Arrange your plu
 
 Tested with:
 
-![ROS2 Rolling](https://img.shields.io/badge/ROS2-Rolling-blue)
+![ROS2 Jazzy](https://img.shields.io/badge/ROS2-Jazzy-blue)
 ![ROS2 Kilted](https://img.shields.io/badge/ROS2-Kilted-blue)
+![ROS2 Lyrical](https://img.shields.io/badge/ROS2-Lyrical-blue)
 
 ---
