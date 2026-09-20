@@ -128,6 +128,7 @@ RQml allows you to save and load your workspace configurations. Arrange your plu
 ---
 ![QML6](https://img.shields.io/badge/Language-QML6-green)
 ![License](https://img.shields.io/badge/License-GPL--3-orange)
+[![CI](https://github.com/RbSCR/joy_checker_rqml_plugins/actions/workflows/ci.yml/badge.svg)](https://github.com/RbSCR/joy_checker_rqml_plugins/actions/workflows/ci.yml)
 
 Tested with:
 
